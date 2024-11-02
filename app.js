@@ -1,13 +1,58 @@
 var fs = require('fs');
 const writeStream = fs.createWriteStream('Output.txt');
 
-var KSH = ['a','ı','o','u']; //kalın sesli harfler
+var KSH = ['a','ı','o','u']; //kalın sesli harfler //BELKİ İLERİDE LAZIM OLUR               
 var ISH = ['e','i','ö','ü']; //ince sesli harfler
 var SZH = ['b', 'c', 'ç', 'd', 'g', 'ğ', 'h', 'k', 'l'  //J harfi olmaz türkçe kelimelerde
           ,'m', 'n', 'p', 'r', 's', 'ş', 't', 'v', 'y', 'z'];
 
 var startSZH = ['b', 'c', 'ç', 'd', 'g', 'k', 'l' //J harfi olmaz türkçe kelimelerde
               , 'n', 'p', 'r', 's', 'ş', 't', 'v', 'y', 'z']; //a word can't start with m h ğ 
+
+var sesliHarfler=['a','ı','o','u','e','i','ö','ü'];
+
+//BELKİ İLERİDE LAZIM OLUR               
+/*var düzÜnlü=['a','e','ı','i'] 
+var yuvarlakÜnlü=['o','ö','u','ü']
+var yuvarlakÜnlüFollower=['a','e','u','ü',]
+var letterA='a'
+var letterAFollowers=['a','ı'];
+
+//new logic
+
+
+var letterE='e'
+var letterEFollowers=['e','i'];
+
+var letterI='ı'
+var letterIFollowers=['a','ı'];
+
+var letterİ='i'
+var letterİFollowers=['e','i'];
+
+var letterO='o'
+var letterOFollowers=['a','u'];
+
+var letterÖ='ö'
+var letterÖFollowers=['e','ü'];
+
+var letterU='u'
+var letterUFollowers=['a','u'];
+
+var letterÜ='ü'
+var letterÜFollowers=['e','ü'];*/ 
+
+
+const letterFollowers = {
+    'a': ['a', 'ı'],
+    'e': ['e', 'i'],
+    'ı': ['a', 'ı'],
+    'i': ['e', 'i'],
+    'o': ['a', 'u'],
+    'ö': ['e', 'ü'],
+    'u': ['a', 'u'],
+    'ü': ['e', 'ü']
+};
 
 function getRandomIntInRange(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -23,28 +68,25 @@ function generateWord(){
     var nextLetter;//1 ünlü 0 ünsüz 
     var firstLetterDecided=0;
 
-    var firstKalinORince; //1 kalın 0 ince
+    var availableNextLetters;
+
+  
+    var aLetter;
+    var sesliDecided=0;
 
     if (decideFirstLetter==1 && !firstLetterDecided){//ÜNLÜ İLE BAŞLAR KELİME
-        var KSHorISH=getRandomIntInRange(0,1); //1 kalın - 0 ünlü
-        firstKalinORince=KSHorISH;
-         //syllables can be 3 letters long
-        if(KSHorISH==1){ //KALIN ÜNLÜ HARF
-            let controll=KSH[getRandomIntInRange(0,KSH.length-1)]
-            syllable.push(controll);
-            //console.log(controll)
-            nextLetter=0;
-            //İLK HECEDE KALIN ÜNLÜ VAR
-        }else if(KSHorISH==0){//İNCE ÜNLÜ HARF
-            syllable.push(ISH[getRandomIntInRange(0,ISH.length-1)]);
-            nextLetter=0;
-          
-        }
+  
+       aLetter=sesliHarfler[getRandomIntInRange(0,sesliHarfler.length-1)];
+       syllable.push(aLetter);
+       availableNextLetters=letterFollowers[`${aLetter}`];
+      
+       nextLetter=0; //SESİZ HARF
+       sesliDecided=1;
     }else if(decideFirstLetter==0 && !firstLetterDecided){//ÜNSÜZ HARF İLE BAŞLAR
 
         syllable.push(startSZH[getRandomIntInRange(0,startSZH.length-1)]);
         nextLetter=1;
-        //console.log(`kelime uzunluğu: ${wordLen}  hece uzunluğu: ${syllableLen}`)
+       
         if(syllableLen==1 && wordLen==1){ //eğer ilk harf sessiz ve kelime tek heceden oluşuyorsa yalnız 1 sessiz harf üretmesini engelle 
             noOneLetterConstWord=getRandomIntInRange(0,1)//0 ise kelimeyi uzat 1 ise heceyi
             if(noOneLetterConstWord==1){
@@ -55,9 +97,9 @@ function generateWord(){
         }
     }
     
-    //console.log(syllable.join(""),nextLetter);
+
     for(var j=0;j<wordLen;j++){
-       // console.log("kelime loop:",j, " yeni kelime uzunluğu: ", wordLen," yeni hece uzunluğu: ", syllableLen);
+
         if(firstLetterDecided==0){
             var k=1;
             firstLetterDecided=1;
@@ -72,47 +114,36 @@ function generateWord(){
                 nextLetter=1;
 
             }else if(nextLetter==1){//ÜNLÜ HARF EKLENECEK
-                //KSHorISH=getRandomIntInRange(0,1); //1 kalın - 0 ünlü
 
-                if(firstKalinORince==1){//KALIN ÜNLÜ EKLENECEK ÇÜNKÜ İLK EKLENEN SESLİ HARF KALIN
-                    let letter=KSH[getRandomIntInRange(0,KSH.length-1)]
-                    syllable.push(letter);
-                    //console.log("kalin: ", letter)
-                    
-                }else if(firstKalinORince==0){//İNCE ÜNLÜ EKLENECEK ÇÜNKÜ İLK EKLENEN SESLİ HARF İNCE
-                    let letter=ISH[getRandomIntInRange(0,ISH.length-1)]
-                    syllable.push(letter);
-                    //console.log("ince: ", letter)
-                    
-                }else{
-                    
-                    firstKalinORince=getRandomIntInRange(0,1); // BURAYA GİRMESİ DEMEK İLK HARF SESSİZ HARFTİ İLK SESLİ HARF VE TÜRÜ BELİRLENECEK 
-                    //AŞAĞIDAKİLER YUKARIDAKİ KARAR MEKANİZMALARININ AYNISI
-                    if(firstKalinORince==0){//KALIN ÜNLÜ EKLENECEK ÇÜNKÜ İLK EKLENEN SESLİ HARF KALIN
-                        syllable.push(KSH[getRandomIntInRange(0,KSH.length-1)]);
-                        firstKalinORince=1;
-                       
-                    }else if(firstKalinORince==1){//İNCE ÜNLÜ EKLENECEK ÇÜNKÜ İLK EKLENEN SESLİ HARF İNCE
-                        syllable.push(ISH[getRandomIntInRange(0,ISH.length-1)]);
-                        firstKalinORince=0;
-                        
-                    }
-                //console.log("ilk harf sessizdi: ",firstKalinORince);
-                
+                if(sesliDecided==1){
+                aLetter=availableNextLetters[getRandomIntInRange(0,1)];
+                syllable.push(aLetter);
+                availableNextLetters=letterFollowers[`${aLetter}`];
+
+                }else{ 
+                  // BURAYA GİRMESİ DEMEK İLK HARF SESSİZ HARFTİ İLK SESLİ HARF VE TÜRÜ BELİRLENECEK 
+                //AŞAĞIDAKİLER YUKARIDAKİ KARAR MEKANİZMALARININ AYNISI
+
+                aLetter=sesliHarfler[getRandomIntInRange(0,sesliHarfler.length-1)];
+                syllable.push(aLetter);
+                availableNextLetters=letterFollowers[`${aLetter}`];
+
+
+                sesliDecided=1;
                 }
             
-                nextLetter=0;
+                nextLetter=0; //SESSİZ HARF
             }
         
             firstLetterDecided=1;
         }
-        //console.log(syllable.join(""));
+
     }
-    //console.log(syllable);
+
     syllableList.push(syllable.join(""));
     var word=syllableList.join("");
     writeStream.write(`${word}\n`); 
-    console.log("word: ", word);   
+    console.log(word);   
     
     
 }
