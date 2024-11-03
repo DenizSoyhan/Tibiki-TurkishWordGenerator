@@ -1,6 +1,3 @@
-var fs = require('fs');
-const writeStream = fs.createWriteStream('Output.txt');
-
 var KSH = ['a','ı','o','u']; //kalın sesli harfler //BELKİ İLERİDE LAZIM OLUR               
 var ISH = ['e','i','ö','ü']; //ince sesli harfler
 var SZH = ['b', 'c', 'ç', 'd', 'g', 'ğ', 'h', 'k', 'l'  //J harfi olmaz türkçe kelimelerde
@@ -58,7 +55,7 @@ function getRandomIntInRange(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function generateWord(){
+export function generateWord(){
     
     var decideFirstLetter = getRandomIntInRange(0, 1); //1 Ünlü - 0 Ünsüz 
     var syllable=[];
@@ -88,7 +85,7 @@ function generateWord(){
         nextLetter=1;
        
         if(syllableLen==1 && wordLen==1){ //eğer ilk harf sessiz ve kelime tek heceden oluşuyorsa yalnız 1 sessiz harf üretmesini engelle 
-            noOneLetterConstWord=getRandomIntInRange(0,1)//0 ise kelimeyi uzat 1 ise heceyi
+            var noOneLetterConstWord=getRandomIntInRange(0,1)//0 ise kelimeyi uzat 1 ise heceyi
             if(noOneLetterConstWord==1){
             syllableLen=syllableLen+Number(getRandomIntInRange(1,2));
             }else if(noOneLetterConstWord==0){
@@ -142,13 +139,9 @@ function generateWord(){
 
     syllableList.push(syllable.join(""));
     var word=syllableList.join("");
-    writeStream.write(`${word}\n`); 
-    console.log(word);   
+
+    return word; 
     
     
 }
 
-for(var i =0;i<10;i++){
-    generateWord();
-    //console.log();
-}
