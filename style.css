@@ -86,6 +86,16 @@ header {
 
     }
 }
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
 .generatedWordsContainer {
     
     display: grid;
@@ -214,26 +224,52 @@ header {
     opacity: 1; 
 }
 
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
 
 .selectedWordsContainer{
-    border-top: solid px green;
+    position: relative;
+    border-top: solid 4px transparent; /* Initial color is transparent */
+    opacity: 0;
+    
     display: none;
     grid-template-columns: repeat(5, 0.5fr); /* 2 columns */
     grid-template-rows: repeat(2, 2fr);    /* 3 rows */
     
-    height: 150px;
+    height: 140px;
     background-color: #6482AD;
     
+    padding-top: 10px;
+
+
+    transition: border-top-color 1s ease, opacity 1s ease;
+
+
+    
 }
+
 .selectedWordDiv{
     border: 1px solid black ;
-    height: 75px;
+    height: 70px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 2px 10px 5px 10px;
     border-radius: 20px;
     background-color: #7FA1C3;
+
+    opacity: 0;
+    animation: fadeInUp .4s ease forwards;
+
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 .selectedWord{
     padding: 0px 10px 0px 10px;
@@ -261,4 +297,16 @@ header {
     color: white;
     background-color: red;
    
+}
+
+#sepetTitle {
+    position: absolute;
+    top: -1.5em; 
+    left: 5px;
+    font-size: 1em;
+    color:  #e2ccc0; 
+    margin: 0;
+    font-size: 2rem;
+
+    animation: fadeInUp2 1s ease forwards;
 }

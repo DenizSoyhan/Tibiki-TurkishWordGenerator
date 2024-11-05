@@ -11,7 +11,7 @@ const theBag=document.querySelector('.selectedWordsContainer');
 
 let isFirstClick=1;
 
-function abstractionOfAddButton(e){ //#TODO animasyon ekle
+function abstractionOfAddButton(e){ 
 
     var selectedWordContainer=document.createElement('div') 
     selectedWordContainer.classList.add('selectedWordDiv');
@@ -28,6 +28,29 @@ function abstractionOfAddButton(e){ //#TODO animasyon ekle
     selectedWordContainer.appendChild(trahsIconButton);
 
     theBag.appendChild(selectedWordContainer);
+
+    trahsIconButton.addEventListener('click', function(){
+    
+        selectedWordContainer.style.animation= 'fadeOut .4s ease forwards';
+
+        // Wait for the animation to complete before removing the element       
+        selectedWordContainer.addEventListener('animationend', function() {
+            selectedWordContainer.remove();
+            rearrangeGrid();
+            
+        })
+});
+    
+
+function rearrangeGrid() {
+    // Trigger a reflow for the grid layout to update
+    selectedWordsContainer.style.display = 'none';
+    selectedWordsContainer.offsetHeight; // trigger reflow
+    selectedWordsContainer.style.display = 'grid';
+}
+
+
+    
 }
 function makeWords(){
 
@@ -55,8 +78,12 @@ function makeWords(){
             
             generatedWordsContainer.appendChild(aWordContainer);
         
-        
-    
+            selectedWordsContainer.style.opacity = '1';
+
+        //border-top-color with a slight delay s
+        setTimeout(() => {
+            selectedWordsContainer.style.borderTopColor = '#e2ccc0';
+        }, 100);
     }
     
     if (isFirstClick) {
