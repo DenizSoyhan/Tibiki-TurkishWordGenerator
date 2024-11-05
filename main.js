@@ -11,9 +11,9 @@ const theBag=document.querySelector('.selectedWordsContainer');
 
 let isFirstClick=1;
 
-function abstractionOfAddButton(e){
+function abstractionOfAddButton(e){ //#TODO animasyon ekle
 
-    var selectedWordContainer=document.createElement('div') //containerları yarat ve kelimeleri ekle içlerine
+    var selectedWordContainer=document.createElement('div') 
     selectedWordContainer.classList.add('selectedWordDiv');
 
     var selectedWord=document.createElement('div');

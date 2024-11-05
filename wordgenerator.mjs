@@ -4,41 +4,9 @@ var SZH = ['b', 'c', 'ç', 'd', 'g', 'ğ', 'h', 'k', 'l'  //J harfi olmaz türk�
           ,'m', 'n', 'p', 'r', 's', 'ş', 't', 'v', 'y', 'z'];
 
 var startSZH = ['b', 'c', 'ç', 'd', 'g', 'k', 'l' //J harfi olmaz türkçe kelimelerde
-              , 'n', 'p', 'r', 's', 'ş', 't', 'v', 'y', 'z']; //a word can't start with m h ğ 
+              , 'n', 'p', 'r', 's', 'ş', 't', 'v', 'y', 'z']; //bir kelime "m , h , ğ" ile başlayamaz 
 
 var sesliHarfler=['a','ı','o','u','e','i','ö','ü'];
-
-//BELKİ İLERİDE LAZIM OLUR               
-/*var düzÜnlü=['a','e','ı','i'] 
-var yuvarlakÜnlü=['o','ö','u','ü']
-var yuvarlakÜnlüFollower=['a','e','u','ü',]
-var letterA='a'
-var letterAFollowers=['a','ı'];
-
-//new logic
-
-
-var letterE='e'
-var letterEFollowers=['e','i'];
-
-var letterI='ı'
-var letterIFollowers=['a','ı'];
-
-var letterİ='i'
-var letterİFollowers=['e','i'];
-
-var letterO='o'
-var letterOFollowers=['a','u'];
-
-var letterÖ='ö'
-var letterÖFollowers=['e','ü'];
-
-var letterU='u'
-var letterUFollowers=['a','u'];
-
-var letterÜ='ü'
-var letterÜFollowers=['e','ü'];*/ 
-
 
 const letterFollowers = {
     'a': ['a', 'ı'],
@@ -51,6 +19,8 @@ const letterFollowers = {
     'ü': ['e', 'ü']
 };
 
+const weightedWordLengthOdds=[1, 2, 2, 2, 2, 3, 3, 3, 3, 3 ]  //uzun kelimeleri daha olası yapmak için 1:10% 2:40% 3:50%
+
 function getRandomIntInRange(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -61,7 +31,7 @@ export function generateWord(){
     var syllable=[];
     var syllableList=[];
     var syllableLen=getRandomIntInRange(1,3);
-    var wordLen=getRandomIntInRange(1,3);
+    var wordLen=weightedWordLengthOdds[getRandomIntInRange(0,weightedWordLengthOdds.length-1)];
     var nextLetter;//1 ünlü 0 ünsüz 
     var firstLetterDecided=0;
 
@@ -145,3 +115,55 @@ export function generateWord(){
     
 }
 
+var tümSZH = ['b', 'c', 'ç', 'd', 'g', 'ğ', 'h', 'k', 'l'  //J harfi eklendi
+    ,'m', 'n', 'p', 'r', 's', 'ş', 't', 'v', 'y', 'z'];
+
+let weightedEvolveOdds=[[0, 0, 0, 0, 0, 0, 0, 1, 1, 1 ],    //evrimleşme oranları; kısa kelimelerin evrimleşme oranı daha fazla
+               [0, 0, 0, 0, 0, 0, 1, 1, 1, 1 ],    //%40
+               [0, 0, 0, 0, 1, 1, 1, 1, 1, 1 ],    //%60
+               [0, 0, 0, 1, 1, 1, 1, 1, 1, 1 ],    //%70
+               [0, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],    //%90
+               [1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],    //%100
+]  
+
+
+export function evolveWord(aWord){
+
+let input=aWord;
+
+input=input.split("")
+
+let whichOdds; //kısa kelimeler daha sık evrimleşmeli
+if(aWord.length==1){ 
+whichOdds=5;
+}else if(aWord.length==2 || aWord.length==3){
+whichOdds=3;
+}else if(aWord.length>=4 || aWord.length<7){
+whichOdds=1;
+}else{
+whichOdds=0;
+}
+
+for(let i=0;i<input.length;i++){
+
+if(tümSZH.includes(input[i])){
+
+   if(weightedEvolveOdds[whichOdds][getRandomIntInRange(0, weightedEvolveOdds[0].length-1)]){ //evrimleşecek ya da evrimleşmeyecek
+
+       let changingLetter = tümSZH[getRandomIntInRange(0,tümSZH.length-1)];
+       input[i]=changingLetter;
+
+   }
+}else if(sesliHarfler.includes(input[i])){
+
+   if(weightedEvolveOdds[whichOdds][getRandomIntInRange(0,weightedEvolveOdds[0].length-1)]){
+
+   let changingLetter = sesliHarfler[getRandomIntInRange(0,sesliHarfler.length-1)];
+   input[i]=changingLetter;
+   }
+}
+}
+
+return input.join("");
+
+}
