@@ -10,9 +10,17 @@ const generateButtonContainer = document.querySelector('#generateButtonContainer
 const theBag=document.querySelector('.selectedWordsContainer');
 
 let isFirstClick=1;
+let selectedWordCounter=0;
 
 function abstractionOfAddButton(e){ 
-
+    selectedWordsContainer.style.display='grid';
+    if(selectedWordCounter==0){
+        selectedWordsContainer.style.animation='fadeInUp .4s ease forwards';
+        selectedWordCounter++;
+    }else{
+        selectedWordCounter++;
+    }
+    
     var selectedWordContainer=document.createElement('div') 
     selectedWordContainer.classList.add('selectedWordDiv');
 
@@ -30,15 +38,26 @@ function abstractionOfAddButton(e){
     theBag.appendChild(selectedWordContainer);
 
     trahsIconButton.addEventListener('click', function(){
-    
-        selectedWordContainer.style.animation= 'fadeOut .4s ease forwards';
+        selectedWordCounter--;
+        
 
-        // Wait for the animation to complete before removing the element       
-        selectedWordContainer.addEventListener('animationend', function() {
+        // Wait for the animation to complete before removing the element  
+        if(selectedWordCounter!=0){    
+            selectedWordContainer.style.animation= 'fadeOut .4s ease forwards'; 
+            selectedWordContainer.addEventListener('animationend', function() {
             selectedWordContainer.remove();
+            console.log(selectedWordsContainer," ",selectedWordCounter)
             rearrangeGrid();
-            
-        })
+            })
+        }else{
+            selectedWordContainer.style.animation= 'fadeOut .4s ease forwards'; 
+            selectedWordContainer.addEventListener('animationend', function() {
+            selectedWordContainer.remove();
+            })
+            selectedWordsContainer.style.animation='fadeOut .4s ease forwards';
+        }
+
+
 });
     
 
@@ -91,7 +110,7 @@ function makeWords(){
         generateButtonContainer.classList.remove('center','show');
         generateButtonContainer.classList.add('bottom');
         
-        selectedWordsContainer.style.display = 'grid' ;
+        //selectedWordsContainer.style.display = 'grid' ;
 
         
        
