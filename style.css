@@ -30,13 +30,13 @@ header {
     max-width: 428px;
     min-width: 428px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     border: solid 1px #E2DAD6;
 }
 
 .explorerButton{
-    width: 30%;
+    width: 40%;
     height: 25px;
     background-color: #e2ccc0;
     border-radius: 20px;
@@ -51,10 +51,18 @@ header {
     font-size: 1.3em;
     transition: .5s; }
 
-.explorerButton:hover{
+.explorerButton:hover {
+    background-color: #7FA1C3; 
+}
+
+.activeButton {
+    background-color: #7FA1C3; 
+}
+
+#generator {
     
+    transition: background-color 1.5s ease; 
     
-    background-color: #6482AD;
 }
 
 
@@ -161,9 +169,10 @@ header {
     align-items: center;
     justify-content: center;
     margin-bottom: 30px; 
-    position: absolute;
+    
     transform: translate(-50%, 200px); 
     transition: transform 0.9s ease;
+    
 }
 .generateButton{
     width: 20%;
@@ -201,8 +210,8 @@ header {
 }
 
 #generateButtonContainer.center {
-    position: absolute;
-     top: -50%;
+    position: fixed;
+    top: -50%;
     left: 50%;
     transform: translate(-50%, -50%);
 
@@ -222,17 +231,6 @@ header {
 #generateButtonContainer.center.show {
     top: 50%; 
     opacity: 1; 
-}
-
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-        transform: scale(1);
-    }
-    to {
-        opacity: 0;
-        transform: scale(0.9);
-    }
 }
 
 .selectedWordsContainer{
@@ -310,3 +308,9 @@ header {
 
     animation: fadeInUp2 1s ease forwards;
 }
+
+.hidden{
+    display: none;
+}
+
+                        /* EVOLVER DIV START*/
