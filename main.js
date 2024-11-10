@@ -23,7 +23,7 @@ const toBeEvolvedContainer =document.querySelector('.toBeEvolvedContainer');
 let isFirstClick=1;
 let selectedWordCounter=0;
 
-let isFirstMix=1;
+
 
 generatorButton.classList.add('activeButton');
 
@@ -96,16 +96,27 @@ function abstractionOfAddButton(e){
 
     theBag.appendChild(selectedWordContainer);
 
-    trahsIconButton.addEventListener('click', function(){ //silme halinde evolved words de silinsin
-        selectedWordCounter--;
+    trahsIconButton.addEventListener('click', function(){ 
+        const allTheEvolvedWordContainers = document.querySelectorAll('.toBeEvolvedWordContainer');
+
         
 
-        // Wait for the animation to complete before removing the element  
+        for (let s = 0; s < allTheEvolvedWordContainers.length; s++) {
+            const wordElement = allTheEvolvedWordContainers[s].querySelector('.toBeEvolvedWord');
+    
+            // ekleme işlemleri sırasında bir yerde white space oluşuyor sanırım o yüzden böyle conditional yazdım
+            if (wordElement && wordElement.textContent.trim() === selectedWordContainer.children[0].textContent.trim()) {
+                allTheEvolvedWordContainers[s].remove(); 
+                break; // Stop after removing the first match
+            }
+        }
+        
+        selectedWordCounter--;
         if(selectedWordCounter!=0){    
             selectedWordContainer.style.animation= 'fadeOut .4s ease forwards'; 
             selectedWordContainer.addEventListener('animationend', function() {
             selectedWordContainer.remove();
-            console.log(selectedWordsContainer," ",selectedWordCounter)
+
             rearrangeGrid();
             })
         }else{
@@ -115,6 +126,9 @@ function abstractionOfAddButton(e){
             })
             selectedWordsContainer.style.animation='fadeOut .4s ease forwards';
         }
+
+        
+
 
     
 
@@ -148,7 +162,7 @@ var toBeEvolvedWordContainer=document.createElement('div')
 
     toBeEvolvedContainer.appendChild(toBeEvolvedWordContainer) 
     
-    console.log(toBeEvolvedContainer,toBeEvolvedWordContainer,wordsContainer,toBeEvolvedWord,finalizeWordButton);
+
 
     
 }
@@ -230,68 +244,66 @@ function updateTextWithFade(element, newText) {
 
     element.textContent = newText;
 }
+
 mixButton.addEventListener('click', function(){
-    console.log(document.querySelectorAll('.selectedWordDiv'));
+    
     if(selectedWordCounter==0){
         alert("Lütfen kelime türetmeden önce sepetinize üreticiden kelime ekleyiniz!")
-    }else if(isFirstMix){
-        var allTheEvolvedWordContainers=document.querySelectorAll('.toBeEvolvedWordContainer');
-       
-        for(let z=0;z<allTheEvolvedWordContainers.length;z++){  
-            var startWord=allTheEvolvedWordContainers[z].textContent;
-            
-            allTheEvolvedWordContainers[z].classList.add('expanded');
-            var unorderedList=document.createElement('ul');
-            for(let u=0;u<5;u++){
-            
-
-            var evolveWordContainer=document.createElement('div');
-            evolveWordContainer.classList.add('evolveWordContainer');
-            
-            var finalFinalWord=document.createElement('div');
-            finalFinalWord.classList.add('finalFinalWord');
-            finalFinalWord.textContent=evolveWord(startWord);
-
-            var evolvedWord=document.createElement('li');
-            evolvedWord.classList.add('evolvedWord');
-            
-            
-            var finalizeEvolvedButton=document.createElement('i')
-            finalizeEvolvedButton.classList.add('toBeEvolvedFinalizeButton','fa-solid' ,'fa-cart-plus');
-
-            evolvedWord.appendChild(finalFinalWord);
-            evolvedWord.appendChild(finalizeEvolvedButton);
-            evolveWordContainer.appendChild(evolvedWord);
-            unorderedList.appendChild(evolveWordContainer);
-
-            
-            
-            }
-            allTheEvolvedWordContainers[z].appendChild(unorderedList);
-        }
-       
-        isFirstMix=0;
     }else{
-       
-        
         var allTheEvolvedWordContainers = document.querySelectorAll('.toBeEvolvedWordContainer');
 
         for (let z = 0; z < allTheEvolvedWordContainers.length; z++) {
     
-            console.log(z," " ,allTheEvolvedWordContainers[z].children[0].textContent)
-            var startWord = allTheEvolvedWordContainers[z].children[0].textContent;
-            
+            if(allTheEvolvedWordContainers[z].classList.contains('expanded')){
+                var startWord = allTheEvolvedWordContainers[z].children[0].textContent;
+        
 
-            var finalWords = allTheEvolvedWordContainers[z].querySelectorAll('.finalFinalWord');
-            
-
-            for (let u = 0; u < finalWords.length; u++) {
-                console.log(startWord);
-                updateTextWithFade(finalWords[u],evolveWord(startWord))
-
+                var finalWords = allTheEvolvedWordContainers[z].querySelectorAll('.finalFinalWord');
                 
+        
+                for (let u = 0; u < finalWords.length; u++) {
+        
+                    updateTextWithFade(finalWords[u],evolveWord(startWord))
+        
+                }
+            }else{  
+                var startWord=allTheEvolvedWordContainers[z].textContent;
+                
+                allTheEvolvedWordContainers[z].classList.add('expanded');
+                var unorderedList=document.createElement('ul');
+                for(let u=0;u<5;u++){
+                
+        
+                var evolveWordContainer=document.createElement('div');
+                evolveWordContainer.classList.add('evolveWordContainer');
+                
+                var finalFinalWord=document.createElement('div');
+                finalFinalWord.classList.add('finalFinalWord');
+                finalFinalWord.textContent=evolveWord(startWord);
+        
+                var evolvedWord=document.createElement('li');
+                evolvedWord.classList.add('evolvedWord');
+                
+                
+                var finalizeEvolvedButton=document.createElement('i')
+                finalizeEvolvedButton.classList.add('toBeEvolvedFinalizeButton','fa-solid' ,'fa-cart-plus');
+        
+                evolvedWord.appendChild(finalFinalWord);
+                evolvedWord.appendChild(finalizeEvolvedButton);
+                evolveWordContainer.appendChild(evolvedWord);
+                unorderedList.appendChild(evolveWordContainer);
+        
+                
+                
+                }
+                allTheEvolvedWordContainers[z].appendChild(unorderedList);
+
             }
+            
+           
         }
+        
+       
     }
 })
 
