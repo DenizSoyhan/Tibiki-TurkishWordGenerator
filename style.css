@@ -333,7 +333,7 @@ header {
    
 
     width: 60%;
-    height: 400px;
+    height: 70px;
     
     border-radius: 40px;
     background-color: rgb(127, 161, 195);
@@ -350,7 +350,10 @@ header {
 
     overflow: hidden; 
 
-    
+    transition: height 0.8s ease;
+}
+.toBeEvolvedWordContainer.expanded {
+    height: 380px; 
 }
 
 
@@ -424,8 +427,9 @@ li{
     border: 1px solid black;
     margin: 10px;
 
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     border-radius: 40px;
+    animation: fadeInUp2 0.6s ease forwards;
 }
 .evolvedWord{
 
@@ -462,7 +466,7 @@ li{
 
 
 #mixButtonContainer{
-    animation: .5s forwards fadeIn;
+    animation: .5s forwards fadeInUp2;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -482,7 +486,7 @@ li{
 
     font-size: 4rem;
 
-    
+
     
     transform: rotate(180deg)
 
@@ -495,7 +499,7 @@ li{
     background-color: #e2ccc0;
     
     transition: .3s;
-
+    animation: .5s forwards fadeIn;
     cursor: pointer;
 }
 

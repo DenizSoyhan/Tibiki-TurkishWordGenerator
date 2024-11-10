@@ -1,8 +1,7 @@
-import {generateWord} from './wordgenerator.mjs'
+import {evolveWord, generateWord} from './wordgenerator.mjs'
 
 const generatorButton=document.querySelector('#generator');
 const evolverButton=document.querySelector('#evolver');
-
 
 
 const generatedWordsContainer=document.querySelector('.generatedWordsContainer');
@@ -18,9 +17,13 @@ const theBag=document.querySelector('.selectedWordsContainer');
 const generatorDiv=document.querySelector('.generatorDiv');
 const evolverDiv=document.querySelector('.evolverDiv');
 
+const mixButton=document.querySelector('#mix');
+const toBeEvolvedContainer =document.querySelector('.toBeEvolvedContainer');
 
 let isFirstClick=1;
 let selectedWordCounter=0;
+
+let isFirstMix=1;
 
 generatorButton.classList.add('activeButton');
 
@@ -93,7 +96,7 @@ function abstractionOfAddButton(e){
 
     theBag.appendChild(selectedWordContainer);
 
-    trahsIconButton.addEventListener('click', function(){
+    trahsIconButton.addEventListener('click', function(){ //silme halinde evolved words de silinsin
         selectedWordCounter--;
         
 
@@ -113,6 +116,7 @@ function abstractionOfAddButton(e){
             selectedWordsContainer.style.animation='fadeOut .4s ease forwards';
         }
 
+    
 
 });
     
@@ -123,7 +127,28 @@ function rearrangeGrid() {
     selectedWordsContainer.offsetHeight; // trigger reflow
     selectedWordsContainer.style.display = 'grid';
 }
+var toBeEvolvedWordContainer=document.createElement('div') 
+    toBeEvolvedWordContainer.classList.add('toBeEvolvedWordContainer');
 
+    var wordsContainer=document.createElement('div');
+    wordsContainer.classList.add('wordsContainer');
+
+    var toBeEvolvedWord=document.createElement('div');
+    toBeEvolvedWord.classList.add('toBeEvolvedWord');
+
+    var finalizeWordButton=document.createElement('i');
+    finalizeWordButton.classList.add('toBeEvolvedFinalizeButton','fa-solid' ,'fa-cart-plus');
+
+    toBeEvolvedWord.textContent=e.target.previousElementSibling.textContent;
+
+    wordsContainer.appendChild(toBeEvolvedWord);
+    wordsContainer.appendChild(finalizeWordButton);
+
+    toBeEvolvedWordContainer.appendChild(wordsContainer)
+
+    toBeEvolvedContainer.appendChild(toBeEvolvedWordContainer) 
+    
+    console.log(toBeEvolvedContainer,toBeEvolvedWordContainer,wordsContainer,toBeEvolvedWord,finalizeWordButton);
 
     
 }
@@ -190,6 +215,83 @@ generateButton.addEventListener('click',()=>{
     makeWords();
 });
 
+/* EVOLVE SIDE*/
+function updateTextWithFade(element, newText) {
+    const evolveWordContainer = element.parentElement.parentElement;
+
+    evolveWordContainer.classList.remove('evolveWordContainer');
+
+    // Force a reflow to reset the animation
+    void evolveWordContainer.offsetWidth;
 
 
+    evolveWordContainer.classList.add('evolveWordContainer');
+
+
+    element.textContent = newText;
+}
+mixButton.addEventListener('click', function(){
+    console.log(document.querySelectorAll('.selectedWordDiv'));
+    if(selectedWordCounter==0){
+        alert("Lütfen kelime türetmeden önce sepetinize üreticiden kelime ekleyiniz!")
+    }else if(isFirstMix){
+        var allTheEvolvedWordContainers=document.querySelectorAll('.toBeEvolvedWordContainer');
+       
+        for(let z=0;z<allTheEvolvedWordContainers.length;z++){  
+            var startWord=allTheEvolvedWordContainers[z].textContent;
+            
+            allTheEvolvedWordContainers[z].classList.add('expanded');
+            var unorderedList=document.createElement('ul');
+            for(let u=0;u<5;u++){
+            
+
+            var evolveWordContainer=document.createElement('div');
+            evolveWordContainer.classList.add('evolveWordContainer');
+            
+            var finalFinalWord=document.createElement('div');
+            finalFinalWord.classList.add('finalFinalWord');
+            finalFinalWord.textContent=evolveWord(startWord);
+
+            var evolvedWord=document.createElement('li');
+            evolvedWord.classList.add('evolvedWord');
+            
+            
+            var finalizeEvolvedButton=document.createElement('i')
+            finalizeEvolvedButton.classList.add('toBeEvolvedFinalizeButton','fa-solid' ,'fa-cart-plus');
+
+            evolvedWord.appendChild(finalFinalWord);
+            evolvedWord.appendChild(finalizeEvolvedButton);
+            evolveWordContainer.appendChild(evolvedWord);
+            unorderedList.appendChild(evolveWordContainer);
+
+            
+            
+            }
+            allTheEvolvedWordContainers[z].appendChild(unorderedList);
+        }
+       
+        isFirstMix=0;
+    }else{
+       
+        
+        var allTheEvolvedWordContainers = document.querySelectorAll('.toBeEvolvedWordContainer');
+
+        for (let z = 0; z < allTheEvolvedWordContainers.length; z++) {
+    
+            console.log(z," " ,allTheEvolvedWordContainers[z].children[0].textContent)
+            var startWord = allTheEvolvedWordContainers[z].children[0].textContent;
+            
+
+            var finalWords = allTheEvolvedWordContainers[z].querySelectorAll('.finalFinalWord');
+            
+
+            for (let u = 0; u < finalWords.length; u++) {
+                console.log(startWord);
+                updateTextWithFade(finalWords[u],evolveWord(startWord))
+
+                
+            }
+        }
+    }
+})
 

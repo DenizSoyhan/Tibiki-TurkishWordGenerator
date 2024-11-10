@@ -119,7 +119,7 @@ var tümSZH = ['b', 'c', 'ç', 'd', 'g', 'ğ', 'h', 'k', 'l'  //J harfi eklendi
     ,'m', 'n', 'p', 'r', 's', 'ş', 't', 'v', 'y', 'z'];
 
 let weightedEvolveOdds=[[0, 0, 0, 0, 0, 0, 0, 1, 1, 1 ],    //evrimleşme oranları; kısa kelimelerin evrimleşme oranı daha fazla
-               [0, 0, 0, 0, 0, 0, 1, 1, 1, 1 ],    //%40
+               [0, 0, 0, 0, 0, 0, 1, 1, 1, 1 ],    //%50
                [0, 0, 0, 0, 1, 1, 1, 1, 1, 1 ],    //%60
                [0, 0, 0, 1, 1, 1, 1, 1, 1, 1 ],    //%70
                [0, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],    //%90
@@ -139,7 +139,7 @@ whichOdds=5;
 }else if(aWord.length==2 || aWord.length==3){
 whichOdds=3;
 }else if(aWord.length>=4 || aWord.length<7){
-whichOdds=1;
+whichOdds=2;
 }else{
 whichOdds=0;
 }
