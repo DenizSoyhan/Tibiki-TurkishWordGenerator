@@ -20,6 +20,7 @@ const evolverDiv=document.querySelector('.evolverDiv');
 const mixButton=document.querySelector('#mix');
 const toBeEvolvedContainer =document.querySelector('.toBeEvolvedContainer');
 
+const finalChosenWords = document.querySelector('.finalChosenWords');
 let isFirstClick=1;
 let selectedWordCounter=0;
 
@@ -307,3 +308,23 @@ mixButton.addEventListener('click', function(){
     }
 })
 
+window.addEventListener('click', function(e){
+    if(e.target.classList.contains('toBeEvolvedFinalizeButton')){
+
+
+        let chosenWordContainer=document.createElement('div');
+        chosenWordContainer.classList.add('chosenWordContainer');
+
+        let finalWord=document.createElement('div');
+        finalWord.classList.add('finalWord');
+        finalWord.textContent=e.target.previousElementSibling.textContent
+
+        let deleteFromChosenButton=document.createElement('i');
+        deleteFromChosenButton.classList.add('deleteFromChosenButton' ,'fa-solid' ,'fa-trash');
+
+        chosenWordContainer.appendChild(finalWord);
+        chosenWordContainer.appendChild(deleteFromChosenButton);
+
+        finalChosenWords.appendChild(chosenWordContainer);
+    }
+})
