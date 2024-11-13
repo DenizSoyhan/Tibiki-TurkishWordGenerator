@@ -334,7 +334,19 @@ window.addEventListener('click', function(e){
 
         chosenWordContainer.appendChild(finalWord);
         chosenWordContainer.appendChild(deleteFromChosenButton);
+        
+        deleteFromChosenButton.addEventListener('click', function(){
+            const parentContainer = deleteFromChosenButton.parentElement;
+    
+            // Add a fade-out class to trigger the CSS transition
+           
+                parentContainer.classList.add('fade-out');
 
+
+            setTimeout(() => {
+                parentContainer.remove();
+            }, 500); // Adjust the delay
+        })
         finalChosenWords.appendChild(chosenWordContainer);
     }
 })

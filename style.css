@@ -520,16 +520,13 @@ li{
   
     margin-right: 100px;
     margin-top: 75px;
-
+    margin-bottom: 20px;
     border-radius: 40px;
 
-    display: grid;
-
-    grid-template-columns: repeat(1, 1fr); /* 1 columns */
-    grid-template-rows: repeat(1, 1fr);    /* 1 rows */
-
-    justify-items: center;   
+    display: flex;
+    flex-direction: column; 
     align-items: center;   
+    padding-top: 10px;      
 
  
 }
@@ -544,9 +541,13 @@ li{
     align-items: center;
     margin: 10px;
 
-    animation: fadeInUp 0.5s ease-in forwards;
-}
 
+    animation: fadeInUp 0.5s ease-in forwards;
+
+}
+.chosenWordContainer.fade-out {
+    animation: fadeOut 0.5s ease-in forwards;
+}
 .finalWord{
     font-size: clamp(1.5rem, 2rem, 3rem);
     letter-spacing: 3px;
