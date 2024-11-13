@@ -1,6 +1,5 @@
 /*TODOS:
 
-2-silme butonu finalchosenwords
 3-İndirme butonu
 4-styling of final chosen words
 5-back end evolver değiştir
@@ -31,6 +30,10 @@ const mixButton=document.querySelector('#mix');
 const toBeEvolvedContainer =document.querySelector('.toBeEvolvedContainer');
 
 const finalChosenWords = document.querySelector('.finalChosenWords');
+const allFinalChosenWords = document.querySelector('.allTheWords');
+
+const downloadButton = document.querySelector('#downloadButton');
+
 let isFirstClick=1;
 let selectedWordCounter=0;
 
@@ -340,13 +343,43 @@ window.addEventListener('click', function(e){
     
             // Add a fade-out class to trigger the CSS transition
            
-                parentContainer.classList.add('fade-out');
+            parentContainer.classList.add('fade-out');
 
 
             setTimeout(() => {
                 parentContainer.remove();
-            }, 500); // Adjust the delay
+            }, 500); 
         })
-        finalChosenWords.appendChild(chosenWordContainer);
+        allFinalChosenWords.appendChild(chosenWordContainer);
     }
+})
+
+downloadButton.addEventListener('click', function(){
+    let allTheWordsContainers=document.querySelectorAll('.chosenWordContainer');
+    
+    let wordlist=[];
+
+    for(let i=0;i<allTheWordsContainers.length;i++){
+        wordlist.push(allTheWordsContainers[i].textContent);
+        
+    }
+    
+
+    if(wordlist.length==0){
+        alert("Hiçbir Kelime Seçilmemiş!")
+    }else{
+    let textToDownload=wordlist.join("\n");
+
+    const blob = new Blob([textToDownload], { type: 'text/plain' });
+
+
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'downloadedText.txt';
+
+
+    link.click();
+    }
+    
+
 })
