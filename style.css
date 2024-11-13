@@ -72,12 +72,7 @@ header {
     justify-content: center;
 
 }
-.EvolvebigContainer{
-    display: flex;
-    align-items: center;
-    
 
-}
 
 @keyframes fadeInUp {
     from {
@@ -331,17 +326,22 @@ header {
 
                         /* EVOLVER DIV START*/
 
+.EvolvebigContainer{
+    display: flex;
+    
+}                       
+                        
 .toBeEvolvedContainer{
-        display: grid;
-        grid-template-columns: repeat(2, 1fr); /* 2 columns */
-        grid-template-rows: repeat(3, 1fr);    /* 3 rows */
-        gap: clamp(10px, 5vw, 10px);; 
-        align-items: center;
-        justify-items: center;
-        width:70%;
-        height: 600px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns */
+    grid-template-rows: repeat(3, 1fr);    /* 3 rows */
+    gap: clamp(10px, 5vw, 10px);; 
+    align-items: center;
+    justify-items: center;
+    width:70%;
+    height: 600px;
 
-        margin-right: 100px;
+    margin-right: 100px;
         
 }
 
@@ -465,13 +465,17 @@ li{
 
 
 #mixButtonContainer{
+    position: fixed;
+
+    left: 630px;
+    bottom: 450px;
     animation: .5s forwards fadeInUp2;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 30px; 
     
-    transform: translate(-15%, -300px);
+
     
    
 }
@@ -497,8 +501,6 @@ li{
     border-radius: 50%;
     background-color: #e2ccc0;
     
-    transition: .3s;
-    animation: .5s forwards fadeIn;
     cursor: pointer;
 }
 

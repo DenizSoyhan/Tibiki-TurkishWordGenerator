@@ -1,3 +1,13 @@
+/*TODOS:
+
+2-silme butonu finalchosenwords
+3-İndirme butonu
+4-styling of final chosen words
+5-back end evolver değiştir
+6-cilala
+
+*/
+
 import {evolveWord, generateWord} from './wordgenerator.mjs'
 
 const generatorButton=document.querySelector('#generator');
