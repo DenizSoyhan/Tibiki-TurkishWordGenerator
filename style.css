@@ -13,7 +13,28 @@ header {
     justify-content: space-between;
    align-items: center;
 }
+#modal h1,
+h2{
+    margin: 0;
+    color: #7FA1C3;
+}
+.modalSubtitle{
+    margin-left: 20px;
+    color: #7FA1C3;
+    font-style:oblique;
+}
+p{
+    margin: 0 0 10px 0;
+    padding-left: 30px;
+    font-size: 2rem;
 
+}
+#modalTitle{
+    text-align: center;
+}
+#modalFork{
+    transform: rotate(180deg);
+}
 .onTopElements {
     width: 100%; 
     display: flex; 
@@ -28,7 +49,7 @@ header {
     font-size: 3em;
     
 }
-.infoButton{
+#infoButton{
 
     color:  #e2ccc0;
     font-size: 3rem;
@@ -37,11 +58,80 @@ header {
 
  
 }
-.infoButton:hover{
+#infoButton:hover{
 
     color:  black;
     
 
+}
+#modal{
+    background-color: #e2ccc0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    
+    padding: 0;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    animation-name: animatemodal;
+    animation-duration: .5s;
+
+}
+#closeButtonContainer{
+
+    position: absolute; 
+    top: 10px; 
+    right: 20px; 
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+
+
+}
+#closeButton{
+    cursor: pointer;
+    font-size: 2em;
+    color: red;
+
+    transition: 0.4s ease;
+    
+}
+#closeButton:hover{
+    color: darkred;
+}
+
+#modalContainer{
+display: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+z-index: 1;
+background-color: rgba(0, 0, 0, .4);
+}
+
+
+@keyframes animatemodal {
+    from{
+        top: -500px;
+     
+        opacity: 0;
+    }
+
+    to {
+        top: 50%;
+        opacity: 1;
+    }
 }
 .pageExplorerContainer{
 

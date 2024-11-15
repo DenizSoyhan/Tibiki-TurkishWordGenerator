@@ -2,7 +2,7 @@
 
 5-back end evolver değiştir
 6-sepetiniz boş ise animasyon ile giriyor
-7-info button with modal
+
 */
 
 import {evolveWord, generateWord} from './wordgenerator.mjs'
@@ -10,6 +10,9 @@ import {evolveWord, generateWord} from './wordgenerator.mjs'
 const generatorButton=document.querySelector('#generator');
 const evolverButton=document.querySelector('#evolver');
 
+const infoButton=document.querySelector("#infoButton");
+const modalContainer=document.querySelector("#modalContainer");
+const closeModalButton=document.querySelector("#closeButton");
 
 const generatedWordsContainer=document.querySelector('.generatedWordsContainer');
 const generateButton=document.querySelector('#generate');
@@ -38,6 +41,20 @@ let selectedWordCounter=0;
 
 
 generatorButton.classList.add('activeButton');
+
+infoButton.addEventListener('click', function(){
+    modalContainer.style.display='block';
+});
+
+closeModalButton.addEventListener('click',function(){
+    modalContainer.style.display='none';
+})
+
+window.addEventListener('click',function(e){
+   if(e.target === modalContainer){
+        modalContainer.style.display='none';
+    }
+})
 
 
 if(whichPage==0){
