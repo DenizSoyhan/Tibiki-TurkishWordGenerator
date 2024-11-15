@@ -9,18 +9,40 @@ body{
 header {
     width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+   align-items: center;
 }
 
 .onTopElements {
     width: 100%; 
     display: flex; 
-    flex-direction: column; 
+     
+    justify-content: center;
     align-items: center; 
-    margin-bottom: 30px;
-}
 
+  
+}
+.infoButtonContainer{
+    padding-left: 100px;
+    font-size: 3em;
+    
+}
+.infoButton{
+
+    color:  #e2ccc0;
+    font-size: 3rem;
+    cursor: pointer;
+    transition: 0.4s ease;
+
+ 
+}
+.infoButton:hover{
+
+    color:  black;
+    
+
+}
 .pageExplorerContainer{
 
     width: 40%;
@@ -33,6 +55,8 @@ header {
     justify-content: center;
     align-items: center;
     border: solid 1px #E2DAD6;
+
+    margin-left: 150px;
 }
 
 .explorerButton{
@@ -369,7 +393,7 @@ header {
     transition: height 0.8s ease;
 }
 .toBeEvolvedWordContainer.expanded {
-    height: 380px; 
+    height: 410px; 
 }
 
 
@@ -426,7 +450,7 @@ li{
     border: 1px solid black;
     margin: 10px;
 
-    font-size: 1.5rem;
+    font-size: 2rem;
     border-radius: 40px;
     animation: fadeInUp2 0.6s ease forwards;
 }
@@ -438,6 +462,10 @@ li{
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.finalFinalWord{
+    margin-bottom: 5px;
+    margin-left: 5px;
 }
 .evolvedWord .toBeEvolvedFinalizeButton.fa-solid.fa-cart-plus{
     font-size: 1.25rem;
@@ -515,6 +543,8 @@ li{
 
 .finalChosenWords{
     border: 2px solid black;
+
+    background-color: #7FA1C3;
 
     width: 20%;
   

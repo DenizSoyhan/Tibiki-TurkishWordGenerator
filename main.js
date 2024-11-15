@@ -1,10 +1,8 @@
 /*TODOS:
 
-3-İndirme butonu
-4-styling of final chosen words
 5-back end evolver değiştir
-6-cilala
-
+6-sepetiniz boş ise animasyon ile giriyor
+7-info button with modal
 */
 
 import {evolveWord, generateWord} from './wordgenerator.mjs'
