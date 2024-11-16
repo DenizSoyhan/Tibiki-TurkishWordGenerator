@@ -19,7 +19,7 @@ const letterFollowers = {
     'ü': ['e', 'ü']
 };
 
-const weightedWordLengthOdds=[1, 2, 2, 2, 2, 3, 3, 3, 3, 3 ]  //uzun kelimeleri daha olası yapmak için 1:10% 2:40% 3:50%
+const weightedWordLengthOdds=[1, 2, 2, 2, 2, 2, 2, 3, 3 ,3, 3, 3, 3, 3 ]  //uzun kelimeleri daha olası yapmak için 1:1 tane  2:6 tane  3:7 tane
 
 function getRandomIntInRange(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -118,52 +118,51 @@ export function generateWord(){
 var tümSZH = ['b', 'c', 'ç', 'd', 'g', 'ğ', 'h', 'k', 'l'  //J harfi eklendi
     ,'m', 'n', 'p', 'r', 's', 'ş', 't', 'v', 'y', 'z'];
 
-let weightedEvolveOdds=[[0, 0, 0, 0, 0, 0, 0, 1, 1, 1 ],    //evrimleşme oranları; kısa kelimelerin evrimleşme oranı daha fazla
-               [0, 0, 0, 0, 0, 0, 1, 1, 1, 1 ],    //%50
-               [0, 0, 0, 0, 1, 1, 1, 1, 1, 1 ],    //%60
-               [0, 0, 0, 1, 1, 1, 1, 1, 1, 1 ],    //%70
-               [0, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],    //%90
-               [1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ],    //%100
-]  
-
 
 export function evolveWord(aWord){
 
-let input=aWord;
+    let input = aWord;
 
-input=input.split("")
+    input = input.split("");  
+    let syllables = [];
+    let counter = 0;
 
-let whichOdds; //kısa kelimeler daha sık evrimleşmeli
-if(aWord.length==1){ 
-whichOdds=5;
-}else if(aWord.length==2 || aWord.length==3){
-whichOdds=3;
-}else if(aWord.length>=4 || aWord.length<7){
-whichOdds=2;
-}else{
-whichOdds=0;
-}
+    // kelimeyi 2 harf uzunluğunda hecelere ayır
+    for (let k = 0; k < input.length; k = k + 2) {
+        if (input.length == 1) {
+            syllables[counter] = [input[k]];  // tek karakter varsa direk ekle
+        } else {
+            syllables[counter] = [];
+            for (let z = 0; z < 2; z++) {
+                if ((z + k) != input.length) {
+                    syllables[counter].push(input[z + k]);
+                } else {
+                    break;
+                }
+            }
+            counter++;
+        }
+    }
 
-for(let i=0;i<input.length;i++){
+    // her heceyi ayrı
+    for (let s = 0; s < syllables.length; s++) {
+        let aSyllable = syllables[s];  
+    
+        let whatToEvolve = getRandomIntInRange(0, 1); // 1 sesl, 0 sessiz
+        if(input.length==1){whatToEvolve==1} //tek harflileri her zaman türet
+        for (let p = 0; p < aSyllable.length; p++) {
+            if (sesliHarfler.includes(aSyllable[p]) && whatToEvolve == 1) {
 
-if(tümSZH.includes(input[i])){
+                aSyllable[p] = sesliHarfler[getRandomIntInRange(0, sesliHarfler.length - 1)];
+            }
+            if (SZH.includes(aSyllable[p]) && whatToEvolve == 0) {
 
-   if(weightedEvolveOdds[whichOdds][getRandomIntInRange(0, weightedEvolveOdds[0].length-1)]){ //evrimleşecek ya da evrimleşmeyecek
+                aSyllable[p] = tümSZH[getRandomIntInRange(0, tümSZH.length - 1)];
+            }
+        }
+    
+        syllables[s] = aSyllable.join('');  
+    }
 
-       let changingLetter = tümSZH[getRandomIntInRange(0,tümSZH.length-1)];
-       input[i]=changingLetter;
-
-   }
-}else if(sesliHarfler.includes(input[i])){
-
-   if(weightedEvolveOdds[whichOdds][getRandomIntInRange(0,weightedEvolveOdds[0].length-1)]){
-
-   let changingLetter = sesliHarfler[getRandomIntInRange(0,sesliHarfler.length-1)];
-   input[i]=changingLetter;
-   }
-}
-}
-
-return input.join("");
-
+    return syllables.join('');  
 }
