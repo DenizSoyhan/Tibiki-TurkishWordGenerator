@@ -18,6 +18,10 @@ h2{
     margin: 0;
     color: #7FA1C3;
 }
+#title{
+    font-size: 3em;
+    margin-bottom: 0;
+}
 .modalSubtitle{
     margin-left: 20px;
     color: #7FA1C3;
@@ -585,7 +589,7 @@ li{
 #mixButtonContainer{
     position: fixed;
 
-    left: 630px;
+    left: 620px;
     bottom: 450px;
     animation: .5s forwards fadeInUp2;
     display: flex;

@@ -1,6 +1,5 @@
 /*TODOS:
 
-5-back end evolver değiştir
 6-sepetiniz boş ise animasyon ile giriyor
 
 */
